@@ -12,9 +12,25 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+/** This is an entity class for appointments with getters, setters,  and constructor
+ * 
+ * @author Sharique Nooman
+ * @version 1.0
+ *
+ */
 @Entity
 @Table(name = "appointments")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Appointment implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -22,20 +38,29 @@ public class Appointment implements Serializable {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "appointment_id")
 	private Long appointmentId;
-	
+
 	@Column(name = "appointment_date", nullable = false)
+	@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+	@FutureOrPresent(message = "Please provide a valid date in format yyyy-MM-dd HH:mm and it should not be a past date")
+	@NotNull
 	private LocalDateTime appointmentDate;
-	
+
 	@Column(name = "appointment_description", nullable = false)
+	@NotBlank
+	@Size(min = 4, message = "Please provide a valid appointment description having min 4 characters")
 	private String appointmentDescription;
-	
+
 	@Column(name = "appointment_type", nullable = false)
+	@NotBlank
+	@Size(min = 4, message = "Please provide a valid appointment type having min 4 characters")
 	private String appointmentType;
-	
+
 	@ManyToOne(targetEntity = Patient.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "patient_id")
+	@NotNull(message = "Please provide patient details")
 	private Patient patient;
-	
+
 	public Appointment() {
 
 	}
@@ -49,8 +74,12 @@ public class Appointment implements Serializable {
 		this.patient = patient;
 	}
 
-	public long getAppointmentId() {
+	public Long getAppointmentId() {
 		return appointmentId;
+	}
+
+	public void setAppointmentId(Long appointmentId) {
+		this.appointmentId = appointmentId;
 	}
 
 	public LocalDateTime getAppointmentDate() {
@@ -80,7 +109,7 @@ public class Appointment implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	public Patient getPatient() {
 		return patient;
 	}
