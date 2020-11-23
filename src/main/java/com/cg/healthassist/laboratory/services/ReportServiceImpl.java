@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cg.healthassist.laboratory.exceptions.ReportNotFoundException;
 import com.cg.healthassist.laboratory.model.Report;
 import com.cg.healthassist.laboratory.repositories.ReportsRepository;
 
@@ -62,7 +63,8 @@ public class ReportServiceImpl implements ReportService {
 	 * */
 	@Override
 	public Report viewReportById(Long reportId) {
-		return reportsRepository.getOne(reportId);
+		return reportsRepository.findById(reportId)
+				.orElseThrow(() -> new ReportNotFoundException("Report not found for this id : " + reportId));
 	}
 
 	/** This method updates the report details by searching with id
@@ -72,7 +74,8 @@ public class ReportServiceImpl implements ReportService {
 	 * */
 	@Override
 	public Report updateReport(Long reportId, Report report) {
-		Report existingReport = reportsRepository.getOne(reportId);
+		Report existingReport = reportsRepository.findById(reportId)
+				.orElseThrow(() -> new ReportNotFoundException("Report not found for this id : " + reportId));
 		BeanUtils.copyProperties(report, existingReport, "reportId");
 		return reportsRepository.saveAndFlush(existingReport);
 	}

@@ -68,6 +68,10 @@ public class Report implements Serializable {
 		return reportId;
 	}
 
+	public void setReportId(Long reportId) {
+		this.reportId = reportId;
+	}
+
 	public String getReportDescription() {
 		return reportDescription;
 	}

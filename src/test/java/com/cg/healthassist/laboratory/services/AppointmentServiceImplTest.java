@@ -75,7 +75,6 @@ public class AppointmentServiceImplTest {
 
 		appointmentService.removeAppointment(appointment.getAppointmentId());
 		verify(appointmentsRepository, times(1)).deleteById(appointment.getAppointmentId());
-
 	}
 
 	@Test

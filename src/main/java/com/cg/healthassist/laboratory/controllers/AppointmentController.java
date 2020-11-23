@@ -3,7 +3,7 @@ package com.cg.healthassist.laboratory.controllers;
 import java.util.List;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +58,7 @@ public class AppointmentController {
 	 * @param appointmentId
 	 */
 	@DeleteMapping("{appointmentId}")
-	public void removeAppointment(@PathVariable @Min(1) Long appointmentId) {
+	public void removeAppointment(@PathVariable @Positive Long appointmentId) {
 		appointmentService.removeAppointment(appointmentId);
 	}
 
@@ -68,7 +68,7 @@ public class AppointmentController {
 	 * @return Appointment object
 	 */
 	@GetMapping("{appointmentId}")
-	public ResponseEntity<Appointment> viewAppointmentById(@PathVariable @Min(1) Long appointmentId) {
+	public ResponseEntity<Appointment> viewAppointmentById(@PathVariable @Positive Long appointmentId) {
 		Appointment appointment = appointmentService.viewAppointmentById(appointmentId);
 		return ResponseEntity.ok().body(appointment);
 	}
@@ -80,7 +80,7 @@ public class AppointmentController {
 	 * @return Appointment object
 	 */
 	@PutMapping("{appointmentId}")
-	public Appointment updateAppointment(@PathVariable @Min(1) Long appointmentId, @Valid @RequestBody Appointment appointment) {
+	public Appointment updateAppointment(@PathVariable @Positive Long appointmentId, @Valid @RequestBody Appointment appointment) {
 		return appointmentService.updateAppointment(appointmentId, appointment);
 	}
 }

@@ -9,6 +9,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -29,6 +30,7 @@ public class Patient implements Serializable{
 	@Id
 	@Column(name = "patient_id")
 	@NotNull(message = "Please provide a valid id it must be a number")
+	@Positive
 	private Long patientId;
 
 	@Column(name = "patient_name", nullable = false)
