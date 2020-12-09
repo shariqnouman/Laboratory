@@ -1,0 +1,22 @@
+table {
+  width: 716px;
+  border-spacing: 0;
+}
+
+tbody,
+thead tr {
+  display: block;
+}
+
+tbody {
+  height: 300px;
+  overflow-y: auto;
+}
+tbody::-webkit-scrollbar {
+  display: none;
+}
+
+tbody td,
+thead th {
+  width: 160px;
+}
